@@ -108,28 +108,51 @@ header h1 {
   margin-left: 10px;
 }
 
+.search-button:hover {
+  color: var(--secondary);
+  cursor: pointer;
+  scale: 1.1;
+  transition: 0.2s ease-in-out;
+}
+
 ul {
-  padding: 5%;
+  padding: 3%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-a.day-saved-city {
-  border: 1px solid var(--primary);
-  background-color: var(--primary);
-  padding: 1.5% 1.7%;
-  border-radius: 5px;
-  margin: 0 0 5% 2%;
+a {
+  margin: 0 0 3% 3%;
+  position: relative;
+  color: #000;
+  text-decoration: none;
 }
 
-a.day-saved-city:first-child {
+a:first-child {
   margin-left: 0;
 }
 
+a::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--tertiary);
+  transform: scaleX(0);
+  transition: transform 0.3s ease-out;
+}
+
+a:hover::before {
+  transform: scaleX(1);
+}
+
 .saved-city {
-  font-size: 0.6rem;
-  color: var(--white);
+  font-size: 0.9rem;
+  color: var(--primary);
 }
 
 .saved-temp {
@@ -177,7 +200,6 @@ a.day-saved-city:first-child {
 .forecast {
   margin-top: 5%;
   background-color: var(--primary);
-  padding: 10px;
 }
 
 .forecast-day-wrap {
@@ -220,7 +242,7 @@ hr {
     padding: 1% 3%;
   }
   .saved-city {
-    font-size: 0.85rem;
+    font-size: 1rem;
   }
   .today {
     display: flex;
@@ -271,7 +293,7 @@ hr {
   }
 
   body {
-    background-image: linear-gradient(var(--primary), var(--secondary));
+    background-color: var(--primary);
     display: grid;
     grid-template-areas:
       "search header header"
@@ -319,20 +341,15 @@ hr {
   }
 
   a.day-saved-city {
-    padding: 5% 30%;
+    padding: 5% 3%;
     margin-bottom: 30px;
-  }
-
-  .saved-city {
-    font-size: 0.9rem;
   }
 
   .today {
     font-size: 1.2rem;
-    padding: 2% 5%;
+    padding: 5% 10%;
     border-radius: 10px;
-    margin: 8% 5% 0% 5%;
-    background-color: var(--secondary);
+    margin: 8% 5% -5% 5%;
   }
 
   .icon-wrapper {
@@ -401,7 +418,6 @@ hr {
 
   .icon-wrapper {
     margin-top: -50px;
-    scale: 1.1;
   }
 
   .forecast-day {
