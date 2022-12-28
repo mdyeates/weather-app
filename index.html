@@ -12,8 +12,6 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="assets/css/style.css" />
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> -->
     <title>Weather Dashboard</title>
   </head>
 
@@ -36,99 +34,27 @@
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
       </form>
-      <p class="hidden no-search-text text-center">No recent search history</p>
+      <p class="no-search-text text-center">No recent search history</p>
       <div class="list-group" id="history">
         <ul>
-          <a class="day-saved-city night-saved-city" href="">
-            <li class="saved-city">London</li>
-          </a>
-          <a class="day-saved-city night-saved-city" href="">
-            <li class="saved-city">London</li>
-          </a>
-          <a class="day-saved-city night-saved-city" href="">
-            <li class="saved-city">London</li>
-          </a>
-          <a class="day-saved-city night-saved-city" href="">
-            <li class="saved-city">London</li>
-          </a>
-          <a class="day-saved-city night-saved-city" href="">
-            <li class="saved-city">London</li>
-          </a>
+          <!-- Search History -->
         </ul>
       </div>
     </section>
 
     <section id="today" class="today" role="region" aria-live="polite">
-      <!-- <div class="today-wind-wrapper text-center">
-        <img class="icon" src="assets/icons/windy.png" alt="" />
-        <p class="today-wind">1.7 Mph</p>
-      </div>
-      <div class="icon-wrapper text-center">
-        <img class="icon changingIcon" src="assets/icons/cloudy-partlysunny.png" alt="" />
-        <p class="today-temp">13&#176;C</p>
-        <p class="today-weather-desc">Partly Sunny</p>
-      </div>
-      <div class="today-humid-wrapper text-center">
-        <img class="icon" src="assets/icons/rainy-cloudy.png" alt="" />
-        <p class="today-humid">85%</p>
-      </div> -->
+      <!-- Current day forecast -->
     </section>
 
     <section id="forecast" class="forecast" role="region" aria-live="polite">
-      <!-- <div class="forecast-day-wrap">
-        <p class="forecast-day">Mon</p>
-        <img class="forecast-icon" src="assets/icons/drizzle-partsunny.png" alt="" />
-        <div class="forecast-temp">19&#176;C</div>
-        <img src="assets/icons/windy.png" alt="" class="forecast-icon forecast-icon-wind" />
-        <div class="forecast-wind">2.5mph</div>
-        <img src="assets/icons/rainy-cloudy.png" alt="" class="forecast-icon forecast-icon-humid" />
-        <div class="forecast-humid">20%</div>
-      </div>
-      <hr />
-      <div class="forecast-day-wrap">
-        <p class="forecast-day">Tue</p>
-        <img class="forecast-icon" src="assets/icons/drizzle-partsunny.png" alt="" />
-        <div class="forecast-temp">19&#176;C</div>
-        <img src="assets/icons/windy.png" alt="" class="forecast-icon forecast-icon-wind" />
-        <div class="forecast-wind">2.5mph</div>
-        <img src="assets/icons/rainy-cloudy.png" alt="" class="forecast-icon forecast-icon-humid" />
-        <div class="forecast-humid">20%</div>
-      </div>
-      <hr />
-      <div class="forecast-day-wrap">
-        <p class="forecast-day">Wed</p>
-        <img class="forecast-icon" src="assets/icons/drizzle-partsunny.png" alt="" />
-        <div class="forecast-temp">19&#176;C</div>
-        <img src="assets/icons/windy.png" alt="" class="forecast-icon forecast-icon-wind" />
-        <div class="forecast-wind">2.5mph</div>
-        <img src="assets/icons/rainy-cloudy.png" alt="" class="forecast-icon forecast-icon-humid" />
-        <div class="forecast-humid">20%</div>
-      </div>
-      <hr />
-      <div class="forecast-day-wrap">
-        <p class="forecast-day">Thu</p>
-        <img class="forecast-icon" src="assets/icons/drizzle-partsunny.png" alt="" />
-        <div class="forecast-temp">19&#176;C</div>
-        <img src="assets/icons/windy.png" alt="" class="forecast-icon forecast-icon-wind" />
-        <div class="forecast-wind">2.5mph</div>
-        <img src="assets/icons/rainy-cloudy.png" alt="" class="forecast-icon forecast-icon-humid" />
-        <div class="forecast-humid">20%</div>
-      </div>
-      <hr />
-      <div class="forecast-day-wrap">
-        <p class="forecast-day">Fri</p>
-        <img class="forecast-icon" src="assets/icons/drizzle-partsunny.png" alt="" />
-        <div class="forecast-temp">19&#176;C</div>
-        <img src="assets/icons/windy.png" alt="" class="forecast-icon forecast-icon-wind" />
-        <div class="forecast-wind">2.5mph</div>
-        <img src="assets/icons/rainy-cloudy.png" alt="" class="forecast-icon forecast-icon-humid" />
-        <div class="forecast-humid">20%</div>
-      </div> -->
+      <!-- 5 Day forecast -->
     </section>
+
     <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- App -->
     <script src="assets/js/app.js"></script>
   </body>
 </html>
