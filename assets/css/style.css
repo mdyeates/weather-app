@@ -136,7 +136,9 @@ a:hover::before {
 
 .no-search-text {
   font-weight: 100;
-  font-size: 0.9rem;
+
+  padding-top: 5%;
+  font-size: 1rem;
   color: var(--primary);
 }
 
@@ -177,6 +179,7 @@ a:hover::before {
   background-color: rgba(255, 255, 255, 0.1);
   padding: 3% 1%;
   border-radius: 10px;
+  display: none;
 }
 
 .forecast-day-wrap {

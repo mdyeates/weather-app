@@ -94,24 +94,24 @@ displayCurrentWeather = (currentData) => {
     $(`
               
               <div class="icon-wrapper text-center">
-                <img class="icon changingIcon" src="" alt="" />
+                <img class="icon changingIcon" src="" alt="Weather Icon" />
                 <p class="today-temp">${currentTemp}&#176;</p>
                 <p class="today-weather-desc">${currentDescription}</p>
                 <p class="high-low-wrapper"><span class="high">H:${highTemp}&#176;</span> <span class"low">L:${lowTemp}&#176;</span></p>
               </div>
               <div class="details-wrapper">
-              <div class="today-wind-wrapper text-center">
-                <img class="icon" src="assets/icons/windy.png" alt="" />
-                <p class="today-wind">Wind: ${currentWindSpeed}kph</p>
-              </div>
-              <div class="feels-like-wrapper text-center">
-              <p class="feels-like-text">Feels like:</p>
-                <p class="feels-like">${feelsLike}&#176;</p>
-              </div>
-              <div class="today-humid-wrapper text-center">
-                <img class="icon" src="assets/icons/rainy-cloudy.png" alt="" />
-                <p class="today-humid">Humidity: ${currentHumidity}%</p>
-              </div>
+                <div class="today-wind-wrapper text-center">
+                  <img class="icon" src="assets/icons/windy.png" alt="Wind Icon" />
+                  <p class="today-wind">Wind: ${currentWindSpeed}kph</p>
+                </div>
+                <div class="feels-like-wrapper text-center">
+                  <p class="feels-like-text">Feels like:</p>
+                  <p class="feels-like">${feelsLike}&#176;</p>
+                </div>
+                <div class="today-humid-wrapper text-center">
+                  <img class="icon" src="assets/icons/rainy-cloudy.png" alt="Humidity Icon" />
+                  <p class="today-humid">Humidity: ${currentHumidity}%</p>
+                </div>
               </div>`)
   );
 
@@ -150,7 +150,7 @@ displayForecast = (forecastData) => {
     forecastEl.append(
       `<div class="forecast-day-wrap">
          <p class="forecast-day">${dayOfWeek}</p>
-         <img class="forecast-icon forecast-changing-icon" src="" alt="" />
+         <img class="forecast-icon forecast-changing-icon" src="" alt="Weather Icon" />
          <div class="forecast-temp">${forecastTemp}&#176;</div>
          <div class="forecast-wind">Wind: ${forecastWind}kph</div>
          <div class="forecast-humid">Humidity: ${forecastHumid}%</div>
@@ -366,14 +366,18 @@ init = () => {
 
     // Call the getWeatherData function and pass in the city name
     getWeatherData(cityName);
+
     $("#search-input").val("");
   });
 
   $("ul").on("click", "a", function (event) {
     event.preventDefault();
+
     // Get the city name from the text content of the clicked li element
     var cityName = $(this).text();
+
     $("#search-input").val("");
+
     // Get the weather data for the city name
     getWeatherData(cityName);
   });
