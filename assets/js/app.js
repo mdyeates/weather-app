@@ -6,24 +6,20 @@ getCurrentDay = () => {
 
   // Set the text of the element to the current day
   currentDayEl.text(currentDay);
+
+  currentDayEl.hide();
+
+  animationEntrance(currentDayEl);
 };
 
-getWeatherData = (cityName) => {
+getWeatherData = (location, latitude, longitude) => {
   var apiKey = "a3a1179d4cb7b4ca24713bc14a6d33a2";
-  var searchInput = $("#search-input");
   var baseURL = "https://api.openweathermap.org/data/2.5/";
   var currentURL = baseURL + `weather?appid=${apiKey}&units=metric&`;
   var forecastURL = baseURL + `forecast?appid=${apiKey}&units=metric&`;
 
-  // Get the search text entered in the search input
-  var searchText = searchInput.val().trim();
-
-  // If a cityName was passed in, use that as the location text
-  // Otherwise, use the search text entered in the search input
-  var location = cityName || searchText;
-
   if (location) {
-    // Get weather data from API
+    // Make a request to the OpenWeatherMap API using the city name
     $.get(currentURL + `q=${location}`).then(function (currentData) {
       displayCurrentWeather(currentData);
       displayCurrentIcon(currentData);
@@ -35,6 +31,36 @@ getWeatherData = (cityName) => {
         displayForecastIcons(forecastData);
       });
     });
+  } else if (latitude && longitude) {
+    // Make a request to the OpenWeatherMap API using the latitude and longitude
+    $.get(currentURL + `lat=${latitude}&lon=${longitude}`).then(function (currentData) {
+      displayCurrentWeather(currentData);
+      displayCurrentIcon(currentData);
+      saveCities(currentData);
+      printCities(currentData);
+
+      $.get(forecastURL + `lat=${latitude}&lon=${longitude}`).then(function (forecastData) {
+        displayForecast(forecastData);
+        displayForecastIcons(forecastData);
+      });
+    });
+  }
+};
+
+getCurrentLocation = () => {
+  // Check if the browser supports the Geolocation API
+  if (navigator.geolocation) {
+    // Get the user's current position
+    navigator.geolocation.getCurrentPosition((position) => {
+      // Get the latitude and longitude of the user's current location
+      var latitude = position.coords.latitude;
+      var longitude = position.coords.longitude;
+
+      // Pass the latitude and longitude to the getWeatherData function
+      getWeatherData(null, latitude, longitude);
+    });
+  } else {
+    console.error("Geolocation is not supported by this browser.");
   }
 };
 
@@ -47,6 +73,7 @@ displayCurrentWeather = (currentData) => {
   var cityName = $("h1");
 
   currentWeatherEl.hide();
+  cityName.hide();
 
   // if (!currentData) {
   //   return currentWeatherEl.html(`<p class="no-search-text">Sorry, no cities were found matching your search.</p>`);
@@ -59,10 +86,10 @@ displayCurrentWeather = (currentData) => {
 
   // Append new content to the element
   currentWeatherEl.append(
-    $(` 
+    $(`
               <div class="today-wind-wrapper text-center">
                 <img class="icon" src="assets/icons/windy.png" alt="" />
-                <p class="today-wind">${currentWindSpeed} mph</p>
+                <p class="today-wind">Wind: ${currentWindSpeed}kph</p>
               </div>
               <div class="icon-wrapper text-center">
                 <img class="icon changingIcon" src="" alt="" />
@@ -71,11 +98,12 @@ displayCurrentWeather = (currentData) => {
               </div>
               <div class="today-humid-wrapper text-center">
                 <img class="icon" src="assets/icons/rainy-cloudy.png" alt="" />
-                <p class="today-humid">${currentHumidity}%</p>
+                <p class="today-humid">Humidity: ${currentHumidity}%</p>
               </div>`)
   );
 
   // Animate the element to fade in
+  animationEntrance(cityName);
   animationEntrance(currentWeatherEl);
 };
 
@@ -85,9 +113,7 @@ displayForecast = (forecastData) => {
   // Filter the forecast data to only include data for the 12pm forecast
   var noonForecastData = forecastData.list.filter((day) => day.dt_txt.endsWith("12:00:00"));
 
-  // Hide the element
   forecastEl.hide();
-  // Remove all existing content from the element
   forecastEl.empty();
 
   // Iterate over the forecast data
@@ -97,14 +123,14 @@ displayForecast = (forecastData) => {
     var forecastHumid = day.main.humidity;
     var date = day.dt_txt;
     var dayOfWeek = moment(date, "YYYY-MM-DD HH:mm:ss").format("ddd");
-    var currentDayOfWeek = moment().format("ddd");
-    var tomorrow = moment().add(1, "day").format("ddd");
+    // var currentDayOfWeek = moment().format("ddd");
+    // var tomorrow = moment().add(1, "day").format("ddd");
 
-    if (dayOfWeek === currentDayOfWeek) {
-      dayOfWeek = "Today";
-    } else if (dayOfWeek === tomorrow) {
-      dayOfWeek = "Tomorrow";
-    }
+    // if (dayOfWeek === currentDayOfWeek) {
+    //   dayOfWeek = "Today";
+    // } else if (dayOfWeek === tomorrow) {
+    //   dayOfWeek = "";
+    // }
 
     // Append new content to the element
     forecastEl.append(
@@ -170,10 +196,8 @@ printCities = () => {
   savedCities.forEach((city) => {
     // Append a list item element with the city name to the element
     $("ul").append(`<a class='day-saved-city night-saved-city' href=''><li class='saved-city'>${city}</li></a>`);
-
     // Remove empty list items
     $("li:empty").remove();
-
     // Remove empty anchor elements
     $("a:empty").remove();
   });
@@ -231,6 +255,9 @@ displayForecastIcons = (forecastData) => {
     // Get the icon for the current day
     var icon = day.weather[0].icon;
 
+    // Replace "n" with "d" in the icon name to fix bug with timezone displaying night icon for noon
+    icon = icon.replace("n", "d");
+
     // Get the URL for the icon
     var iconUrl = getIconUrl(icon);
 
@@ -255,40 +282,53 @@ addNightTheme = () => {
   var nightStart = 18;
   var nightEnd = 6;
 
-  // Set the color to be used for the night theme
+  // Set the colors to be used for the night theme
+  var bgNightColor = "linear-gradient(var(--dark-primary), var(--dark-secondary))";
   var nightPrimary = "var(--dark-primary)";
-
   // If the current hour is within the night period (between 18 and 6), apply the night theme
   if (currentHour >= nightStart || currentHour <= nightEnd) {
     $("body").css({
+      backgroundImage: bgNightColor,
       backgroundColor: nightPrimary,
     });
+
     $("header").css({
-      backgroundColor: nightPrimary,
+      backgroundColor: "transparent",
+    });
+
+    $("h1").css({
+      color: "white",
+    });
+
+    $(".today-date").css({
+      color: "white",
     });
 
     $(".container").css({
-      backgroundColor: nightPrimary,
+      backgroundColor: "transparent",
     });
 
     $(".forecast").css({
-      backgroundColor: nightPrimary,
-    });
-
-    $(".today").css({
-      backgroundColor: nightPrimary,
+      backgroundColor: "transparent",
     });
   }
 };
 
 init = () => {
+  // Display weather forecast for current location on page load
+  getCurrentLocation();
+
   // Print the list of previously searched cities on page load
   printCities();
 
-  $("#search-button").click((event) => {
+  $("#search-form").on("submit", function (event) {
     event.preventDefault();
-    // Get the weather data for the search input value
-    getWeatherData();
+
+    // Get the city name from the search input
+    var cityName = $("#search-input").val().trim();
+
+    // Call the getWeatherData function and pass in the city name
+    getWeatherData(cityName);
     $("#search-input").val("");
   });
 
@@ -311,7 +351,7 @@ init = () => {
 
   // Update the current day and apply the night theme on page load
   getCurrentDay();
-  addNightTheme();
+  // addNightTheme();
 };
 
 // Call the function to initialize the page
