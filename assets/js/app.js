@@ -25,6 +25,7 @@ getWeatherData = (location, latitude, longitude) => {
       displayCurrentIcon(currentData);
       saveCities(currentData);
       printCities(currentData);
+      displayNightTheme(currentData);
 
       $.get(forecastURL + `lat=${currentData.coord.lat}&lon=${currentData.coord.lon}`).then(function (forecastData) {
         displayForecast(forecastData);
@@ -38,6 +39,7 @@ getWeatherData = (location, latitude, longitude) => {
       displayCurrentIcon(currentData);
       saveCities(currentData);
       printCities(currentData);
+      displayNightTheme(currentData);
 
       $.get(forecastURL + `lat=${latitude}&lon=${longitude}`).then(function (forecastData) {
         displayForecast(forecastData);
@@ -68,6 +70,9 @@ displayCurrentWeather = (currentData) => {
   var currentWeatherEl = $("#today");
   var currentWindSpeed = Math.round(currentData.wind.speed);
   var currentTemp = Math.round(currentData.main.temp);
+  var highTemp = Math.round(currentData.main.temp_max);
+  var lowTemp = Math.round(currentData.main.temp_min);
+  var feelsLike = Math.round(currentData.main.feels_like);
   var currentHumidity = currentData.main.humidity;
   var currentDescription = currentData.weather[0].main;
   var cityName = $("h1");
@@ -87,22 +92,30 @@ displayCurrentWeather = (currentData) => {
   // Append new content to the element
   currentWeatherEl.append(
     $(`
+              
+              <div class="icon-wrapper text-center">
+                <img class="icon changingIcon" src="" alt="" />
+                <p class="today-temp">${currentTemp}&#176;</p>
+                <p class="today-weather-desc">${currentDescription}</p>
+                <p class="high-low-wrapper"><span class="high">H:${highTemp}&#176;</span> <span class"low">L:${lowTemp}&#176;</span></p>
+              </div>
+              <div class="details-wrapper">
               <div class="today-wind-wrapper text-center">
                 <img class="icon" src="assets/icons/windy.png" alt="" />
                 <p class="today-wind">Wind: ${currentWindSpeed}kph</p>
               </div>
-              <div class="icon-wrapper text-center">
-                <img class="icon changingIcon" src="" alt="" />
-                <p class="today-temp">${currentTemp}&#176;C</p>
-                <p class="today-weather-desc">${currentDescription}</p>
+              <div class="feels-like-wrapper text-center">
+              <p class="feels-like-text">Feels like:</p>
+                <p class="feels-like">${feelsLike}&#176;</p>
               </div>
               <div class="today-humid-wrapper text-center">
                 <img class="icon" src="assets/icons/rainy-cloudy.png" alt="" />
                 <p class="today-humid">Humidity: ${currentHumidity}%</p>
+              </div>
               </div>`)
   );
 
-  // Animate the element to fade in
+  // Animate the elements to fade in
   animationEntrance(cityName);
   animationEntrance(currentWeatherEl);
 };
@@ -123,6 +136,7 @@ displayForecast = (forecastData) => {
     var forecastHumid = day.main.humidity;
     var date = day.dt_txt;
     var dayOfWeek = moment(date, "YYYY-MM-DD HH:mm:ss").format("ddd");
+
     // var currentDayOfWeek = moment().format("ddd");
     // var tomorrow = moment().add(1, "day").format("ddd");
 
@@ -137,11 +151,9 @@ displayForecast = (forecastData) => {
       `<div class="forecast-day-wrap">
          <p class="forecast-day">${dayOfWeek}</p>
          <img class="forecast-icon forecast-changing-icon" src="" alt="" />
-         <div class="forecast-temp">${forecastTemp}&#176;C</div>
-         <img src="assets/icons/windy.png" alt="" class="forecast-icon forecast-icon-wind" />
-         <div class="forecast-wind">${forecastWind} mph</div>
-         <img src="assets/icons/rainy-cloudy.png" alt="" class="forecast-icon forecast-icon-humid" />
-         <div class="forecast-humid">${forecastHumid}%</div>
+         <div class="forecast-temp">${forecastTemp}&#176;</div>
+         <div class="forecast-wind">Wind: ${forecastWind}kph</div>
+         <div class="forecast-humid">Humidity: ${forecastHumid}%</div>
        </div>
        <hr />`
     );
@@ -152,7 +164,7 @@ displayForecast = (forecastData) => {
 };
 
 saveCities = (currentData) => {
-  // Get the name of the city from the currentData object
+  // Get the name of the city from API
   cityName = currentData.name;
 
   // Get the stored cities from local storage, or an empty array if none are found
@@ -171,7 +183,7 @@ saveCities = (currentData) => {
   // Keep only the first 5 elements of the array
   storedCities = storedCities.slice(0, 5);
 
-  // Save the modified array to local storage as a string
+  // Save the modified array to local storage
   localStorage.setItem("Cities", JSON.stringify(storedCities));
 };
 
@@ -274,44 +286,69 @@ animationEntrance = (element) => {
   });
 };
 
-addNightTheme = () => {
-  // Get the current hour using moment.js
-  var currentHour = moment().hour();
+displayNightTheme = (currentData) => {
+  // Get the current time
+  var currentTime = Date.now() / 1000;
 
-  // Set the start and end of the night period
-  var nightStart = 18;
-  var nightEnd = 6;
+  // Get the sunset and sunrise times
+  var sunset = currentData.sys.sunset;
+  var sunrise = currentData.sys.sunrise;
 
+  // If the current hour is within the night period (between 18 and 6), apply the night theme
+  if (currentTime < sunrise || currentTime > sunset) {
+    applyNightTheme();
+  } else removeNightTheme();
+};
+
+applyNightTheme = () => {
   // Set the colors to be used for the night theme
   var bgNightColor = "linear-gradient(var(--dark-primary), var(--dark-secondary))";
   var nightPrimary = "var(--dark-primary)";
-  // If the current hour is within the night period (between 18 and 6), apply the night theme
-  if (currentHour >= nightStart || currentHour <= nightEnd) {
-    $("body").css({
-      backgroundImage: bgNightColor,
-      backgroundColor: nightPrimary,
-    });
 
-    $("header").css({
-      backgroundColor: "transparent",
-    });
+  $("body").css({
+    backgroundImage: bgNightColor,
+    backgroundColor: nightPrimary,
+  });
 
-    $("h1").css({
-      color: "white",
-    });
+  $("header").css({
+    backgroundColor: "transparent",
+  });
 
-    $(".today-date").css({
-      color: "white",
-    });
+  $("h1").css({
+    color: "white",
+  });
 
-    $(".container").css({
-      backgroundColor: "transparent",
-    });
+  $(".today-date").css({
+    color: "white",
+  });
 
-    $(".forecast").css({
-      backgroundColor: "transparent",
-    });
-  }
+  $(".container").css({
+    backgroundColor: "transparent",
+  });
+};
+
+removeNightTheme = () => {
+  // Reset the styles of the elements to their default values
+  $("body").css({
+    backgroundImage: "",
+    backgroundColor: "",
+  });
+
+  $("header").css({
+    backgroundColor: "",
+  });
+
+  $("h1").css({
+    color: "",
+  });
+
+  $(".today-date").css({
+    color: "",
+  });
+
+  $(".container").css({
+    backgroundColor: "",
+  });
 };
 
 init = () => {
@@ -341,17 +378,13 @@ init = () => {
     getWeatherData(cityName);
   });
 
-  // Set an interval to update the current day and apply the night theme every hour
+  // Set an interval to update the current day every hour
   setInterval(() => {
-    // Update the current day
     getCurrentDay();
-    // Apply the night theme
-    addNightTheme();
   }, 3600000);
 
-  // Update the current day and apply the night theme on page load
+  // Update the current day
   getCurrentDay();
-  // addNightTheme();
 };
 
 // Call the function to initialize the page
