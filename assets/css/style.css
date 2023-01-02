@@ -2,9 +2,8 @@
 
 /* || VARIABLES */
 :root {
-  --primary: #55a7de;
-  --secondary: #73b9e3;
-  --tertiary: #a1d8fa;
+  --primary: #005893;
+  --secondary: #55a7de;
   --white: #fff;
   --dark-primary: #0e1a45;
   --dark-secondary: #31255a;
@@ -41,14 +40,14 @@ a {
 header {
   background-color: var(--white);
   color: var(--primary);
-  padding: 2% 10%;
+  padding: 2% 6%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 header h1 {
-  font-size: 1.7rem;
+  font-size: 1.3rem;
 }
 
 .container {
@@ -70,6 +69,7 @@ header h1 {
   border: 1px solid var(--primary);
   color: var(--primary);
   flex: 1;
+  margin: 0 1%;
 }
 
 .weather-search::placeholder {
@@ -120,7 +120,7 @@ a::before {
   height: 2px;
   bottom: 0;
   left: 0;
-  background-color: var(--tertiary);
+  background-color: var(--primary);
   transform: scaleX(0);
   transition: transform 0.3s ease-out;
 }
@@ -185,13 +185,20 @@ a:hover::before {
 .forecast-day-wrap {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin: 5%;
+  margin: 5% 0;
   height: 2.5vh;
 }
 
+.forecast-day-wrap > * {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
 .forecast-icon {
-  scale: 0.1;
+  scale: 0.2;
+  width: 1rem;
 }
 
 .forecast-day {
@@ -260,77 +267,12 @@ hr:last-child {
   .forecast-temp {
     font-size: 1.2rem;
   }
-
-  .forecast-icon {
-    scale: 0.15;
-  }
 }
 
 /* || LARGE TABLETS AND LAPTOP STYLES */
 @media screen and (min-width: 960px) {
-  body {
-    background-color: var(--primary);
-    display: grid;
-    grid-template-areas:
-      "search header header"
-      "search today today"
-      "search forecast forecast";
-
-    grid-template-columns: 25% auto auto;
-  }
-
-  header {
-    grid-area: header;
-    color: var(--white);
-    padding: 5%;
-    justify-content: center;
-    flex-direction: column;
-    background-color: transparent;
-  }
-
   header h1 {
     font-size: 2rem;
-    margin-bottom: 0;
-  }
-
-  /* Search */
-  .container {
-    border-right: 3px solid var(--primary);
-    border-bottom: none;
-    border-radius: 0;
-    grid-area: search;
-  }
-
-  .weather-search {
-    padding: 4%;
-    width: 100%;
-    margin-right: 5px;
-    margin-left: 10px;
-  }
-
-  .form {
-    margin-left: 50px;
-    margin-top: 50px;
-  }
-
-  ul {
-    flex-direction: column;
-  }
-
-  a.day-saved-city {
-    padding: 5% 3%;
-    margin-bottom: 5%;
-  }
-
-  /* Today */
-  .today {
-    grid-area: today;
-  }
-
-  /* Forecast */
-  .forecast {
-    grid-area: forecast;
-    margin-top: 0;
   }
 
   .forecast-wind,

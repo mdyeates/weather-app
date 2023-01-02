@@ -80,10 +80,6 @@ displayCurrentWeather = (currentData) => {
   currentWeatherEl.hide();
   cityName.hide();
 
-  // if (!currentData) {
-  //   return currentWeatherEl.html(`<p class="no-search-text">Sorry, no cities were found matching your search.</p>`);
-  // }
-
   cityName.text(currentData.name + ", " + currentData.sys.country);
 
   // Remove all existing content from the element
@@ -137,14 +133,14 @@ displayForecast = (forecastData) => {
     var date = day.dt_txt;
     var dayOfWeek = moment(date, "YYYY-MM-DD HH:mm:ss").format("ddd");
 
-    // var currentDayOfWeek = moment().format("ddd");
-    // var tomorrow = moment().add(1, "day").format("ddd");
+    var currentDayOfWeek = moment().format("ddd");
+    var tomorrow = moment().add(1, "day").format("ddd");
 
-    // if (dayOfWeek === currentDayOfWeek) {
-    //   dayOfWeek = "Today";
-    // } else if (dayOfWeek === tomorrow) {
-    //   dayOfWeek = "";
-    // }
+    if (dayOfWeek === currentDayOfWeek) {
+      dayOfWeek = "Today";
+    } else if (dayOfWeek === tomorrow) {
+      dayOfWeek = "Tomorrow";
+    }
 
     // Append new content to the element
     forecastEl.append(
@@ -304,6 +300,8 @@ applyNightTheme = () => {
   // Set the colors to be used for the night theme
   var bgNightColor = "linear-gradient(var(--dark-primary), var(--dark-secondary))";
   var nightPrimary = "var(--dark-primary)";
+  var bgNightHeading = "#060d26";
+  var hlNightHeading = "#55a7de";
 
   $("body").css({
     backgroundImage: bgNightColor,
@@ -311,7 +309,7 @@ applyNightTheme = () => {
   });
 
   $("header").css({
-    backgroundColor: "transparent",
+    backgroundColor: bgNightHeading,
   });
 
   $("h1").css({
@@ -323,7 +321,16 @@ applyNightTheme = () => {
   });
 
   $(".container").css({
-    backgroundColor: "transparent",
+    backgroundColor: bgNightHeading,
+  });
+
+  $(".saved-city").css({
+    color: hlNightHeading,
+  });
+
+  $(".weather-search").css({
+    borderColor: hlNightHeading,
+    color: hlNightHeading,
   });
 };
 
@@ -348,6 +355,14 @@ removeNightTheme = () => {
 
   $(".container").css({
     backgroundColor: "",
+  });
+  $(".saved-city").css({
+    color: "",
+  });
+
+  $(".weather-search").css({
+    borderColor: "",
+    color: "",
   });
 };
 
