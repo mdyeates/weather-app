@@ -60,13 +60,11 @@ User Story:
 
 Project Summary:
 
-This weather dashboard makes it easy to stay on top of the latest weather conditions for your favorite cities. Using the reliable OpenWeatherMap API, you can search for a city and quickly see a detailed overview of the current weather, including the city name, date, weather icon, temperature, humidity, and wind speed. You'll also have access to a 5-day forecast that includes the date, weather icon, temperature, and humidity.
+Keep your finger on the pulse of the weather with this dynamic and user-friendly weather dashboard! Using the trusted OpenWeatherMap API, you can easily search for and view detailed weather data for your favorite cities, including the city name, date, weather icon, temperature, humidity, and wind speed. With a 5-day forecast also at your fingertips, you'll have all the information you need to plan your days with confidence.
 
-And when you search for a city, this dashboard will automatically adjust the theme to reflect whether it's currently night or day in that location, so you can easily view the weather at a glance. Plus, any city you search for will be saved in your search history, so you can easily access the weather conditions for that city again in the future.
+This dashboard is designed for convenience, with a search history feature that saves your past searches for easy access, and an automatic theme adjuster that changes the look of the page based on whether it's currently day or night in the searched location. Plus, when the page loads, the geolocation API will automatically determine your current location and display the weather for your area.
 
-When the page first loads, the dashboard will also use the web browser's geolocation API to determine your current location and display the weather for that location.
-
-While working on this project, I gained valuable experience in accessing and retrieving data from RESTful web APIs using AJAX calls. I also learned how to process the returned data and use it in conjunction with JavaScript logic to generate dynamic page elements, enabling an application to display customized content based on the responses from the API.
+In addition to providing an enjoyable user experience, working on this project allowed me to gain valuable experience in accessing and retrieving data from RESTful web APIs using AJAX calls, as well as processing returned data and using it with JavaScript logic to generate dynamic page elements. This enables the application to display customized content based on the responses from the API, making it a versatile and effective tool.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
