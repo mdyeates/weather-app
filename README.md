@@ -13,9 +13,7 @@
 <h3 align="center">Weather Dashboard</h3>
 
   <p align="center">
-  Stay ahead of the weather with this simple weather app. With just a few taps, you can easily access detailed forecasts for cities around the world, giving you the confidence to plan your day with ease.
-
-This app utilizes the reliable OpenWeatherMap API to provide in-depth forecasts for the current day and the next five days. This includes high and low temperatures, humidity levels, and wind speed, helping you stay informed and prepared for whatever Mother Nature has in store.
+  Get a jump on the weather with this intuitive and reliable weather app! With just a few taps, you can quickly access detailed forecasts for cities around the globe, empowering you to plan your day with ease and confidence. Utilizing the trusted OpenWeatherMap API, this app provides comprehensive forecasts for the current day and the next five days, including high and low temperatures, humidity levels, and wind speed. Stay one step ahead of Mother Nature with this indispensable app that keeps you informed and prepared for whatever the weather has in store.
 
 <br />
 <a href="https://github.com/mdyeates/weather-app"><strong>Explore the docs »</strong></a>
