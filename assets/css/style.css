@@ -150,6 +150,7 @@ a:hover::before {
   border-radius: 10px;
   margin: 5% 5%;
   background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
 }
 
 .today-temp {
@@ -180,6 +181,7 @@ a:hover::before {
   padding: 3% 1%;
   border-radius: 10px;
   display: none;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
 }
 
 .forecast-day-wrap {
@@ -247,6 +249,7 @@ hr:last-child {
     margin: 5%;
     padding: 2%;
     border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
   }
 
   .details-wrapper .icon {
